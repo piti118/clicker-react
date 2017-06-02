@@ -1,0 +1,30 @@
+{
+  "name": "clicker_react",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:5555",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "material-ui": "^0.18.1",
+    "prop-types": "^15.5.10",
+    "qrcode.react": "^0.7.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-json-pretty": "^1.6.3",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^7.0.1",
+    "react-scripts": "1.0.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eslint-init": "eslint --init",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
