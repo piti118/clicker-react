@@ -1,24 +1,43 @@
 import React, {Component} from 'react'
 import * as api from '../api'
 import PropTypes from 'prop-types'
-import RaisedButton from 'material-ui/RaisedButton';
-import CircularProgress from 'material-ui/CircularProgress';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import FlatButton from 'material-ui/FlatButton';
+import * as util from '../util'
+import HomeButton from './HomeButton'
+
+function Choice(props){
+  const {label, selected} = props
+  const style={
+    borderStyle: 'solid',
+    borderColor: selected? 'rgb(102, 102, 102)' : 'rgba(0,0,0,0)'
+  }
+  return (
+    <div style={style} className="choice">
+      <FlatButton
+        label={label}
+        backgroundColor={util.colorForAnswer(label)}
+        fullWidth={true}
+        onClick={props.onClick}
+      />
+    </div>
+  )
+}
 
 function VoteButtons(props) {
   const choices = ['1','2','3','4']
+  const {answer, onVote}= props
+  const sanswer = String(answer)
   return (
-    <RadioButtonGroup
-      name="Answer"
-      valueSelected={props.answer}
-      onChange={(e,v)=>props.onVote(v)}>
-      {choices.map((v) =>
-        <RadioButton
-          key={v}
-          value={v}
-          label={v}
-        />)}
-    </RadioButtonGroup>
+    <div>
+      {choices.map(v => (
+        <div key={`choice-${v}`}>
+          <Choice
+            label={v}
+            selected={v===sanswer}
+            onClick={()=>onVote(v)}/>
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -57,6 +76,7 @@ export default class StudentRoom extends Component {
   }
 
   onVote(roomid, token, answer){
+    console.log(`vote ${answer}`)
     this.setState({answer}, ()=>api.vote(roomid, token, answer))
   }
 
@@ -64,9 +84,12 @@ export default class StudentRoom extends Component {
     const {roomid, token} = this.props
     const {answer} = this.state
     return (
-      <div>
-        Student Room {roomid}
-        <VoteButtons answer={answer} onVote={(answer) => this.onVote(roomid, token, answer)}/>
+      <div className="full-screen vertical-center">
+        <div className="horizontal-center card">
+          <HomeButton/>
+          <h1>Student Room {roomid}</h1>
+          <VoteButtons answer={answer} onVote={(answer) => this.onVote(roomid, token, answer)}/>
+        </div>
       </div>
     )
   }

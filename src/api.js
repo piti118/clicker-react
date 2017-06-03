@@ -6,6 +6,18 @@ const base = {
   'production': '/v1'
 }[env]
 
+export function studentURL(roomid) {
+  var {protocol, host} = window.location;
+  var url = `${protocol}//${host}/student/${roomid}`
+  return url
+}
+
+export function teacherURL(roomid) {
+  var {protocol, host} = window.location;
+  var url = `${protocol}//${host}/teacher/${roomid}`
+  return url
+}
+
 export function createToken() {
   return axios.get(`${base}/create-token`)
 }
