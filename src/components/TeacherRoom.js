@@ -194,10 +194,10 @@ export default class TeacherRoom extends Component {
     const showTally = shuffleMode?util.shuffleObject(tally): tally
     return (
       <div className="full-screen vertical-center">
+        {!loading && <HomeButton/>}
         <div className="card horizontal-center">
           <Loading loading={loading}>
             <div>
-              <HomeButton/>
               <RoomInfo
                 roomid={roomid}
                 onReset={()=>this.onReset(roomid, token)}

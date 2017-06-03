@@ -38,7 +38,9 @@ body {
 }
 
 .graph-container {
-  height: 60vh;
+  min-height: 30vh;
+  max-height: 60vh;
+  height: 50vh;
 }
 
 .qr-canvas {
@@ -71,13 +73,13 @@ body {
 
 .home-button-container {
   position: relative;
-  top: -50px;
-  left: -30px; /*negative padding to outer padding*/
+  top: 0px;
+  left: 0px; /*negative padding to outer padding*/
 }
 
 .home-button {
   position: absolute;
-  padding: 10px;
+  margin: 10px;
   left: 0px;
   top: 0px;
 }
