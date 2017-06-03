@@ -144,7 +144,6 @@ export default class TeacherRoom extends Component {
     const roomid = this.props.roomid
     if(!document.hidden){ //do nothing when inactive
       return api.tally(roomid).then((res) => {
-        console.log(res.data.counts)
         this.setState({
           loading: false,
           tally: res.data.counts

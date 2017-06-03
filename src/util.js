@@ -10,6 +10,5 @@ export function colorObjectForAnswer(a) {
 }
 
 export function colorForAnswer(a) {
-  console.log(colorObjectForAnswer(a))
   return colorObjectForAnswer(a).rgb().string()
 }
