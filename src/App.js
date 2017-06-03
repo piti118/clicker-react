@@ -8,10 +8,7 @@ import PropTypes from 'prop-types'
 import TeacherRoom from './components/TeacherRoom'
 import StudentRoom from './components/StudentRoom'
 import Home from './components/Home'
-
-function NotFound() {
-  return <div>Not Found</div>
-}
+import NotFound from './components/NotFound'
 
 class App extends Component {
 
