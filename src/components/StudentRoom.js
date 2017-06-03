@@ -11,11 +11,15 @@ function Choice(props){
     borderStyle: 'solid',
     borderColor: selected? 'rgb(102, 102, 102)' : 'rgba(0,0,0,0)'
   }
+  const color = util.colorObjectForAnswer(label)
+  const baseColor = color.rgb().string()
+  const hoverColor = color.saturate(1.0).rgb().string()
   return (
     <div style={style} className="choice">
       <FlatButton
         label={label}
-        backgroundColor={util.colorForAnswer(label)}
+        backgroundColor={baseColor}
+        hoverColor={hoverColor}
         fullWidth={true}
         onClick={props.onClick}
       />
@@ -78,7 +82,6 @@ export default class StudentRoom extends Component {
   }
 
   onVote(roomid, token, answer){
-    console.log(`vote ${answer}`)
     this.setState({answer}, ()=>api.vote(roomid, token, answer))
   }
 

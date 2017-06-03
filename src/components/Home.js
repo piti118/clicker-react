@@ -58,12 +58,14 @@ function Home(props) {
     <div className="full-screen vertical-center">
       <div className="horizontal-center card home">
         <h1>Clickery</h1>
-        <div className="zoom horizontal-center">
-          <JoinRoom history={props.history}/>
-        </div>
-        <h2>or</h2>
-        <div className="zoom">
-          <CreateRoom onCreateRoom={props.onCreateRoom}/>
+        <div className="rounded-highlight">
+          <div className="zoom horizontal-center">
+            <JoinRoom history={props.history}/>
+          </div>
+          <h2>or</h2>
+          <div className="zoom">
+            <CreateRoom onCreateRoom={props.onCreateRoom}/>
+          </div>
         </div>
       </div>
     </div>

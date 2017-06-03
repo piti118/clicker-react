@@ -7,6 +7,12 @@ body {
   color: rgba(0, 0, 0, 0.7);
 }
 
+.rounded-highlight {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+  padding-bottom: 30px;
+}
+
 .bg-image{
   background: url(https://source.unsplash.com/collection/606460/daily) no-repeat center center fixed;
   background-size: cover;
