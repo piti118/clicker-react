@@ -155,7 +155,7 @@ export default class TeacherRoom extends Component {
   }
 
   componentDidMount() {
-    this.poller = setInterval(() => this.updateTally() , 2000 );
+    this.poller = setInterval(() => this.updateTally() , 700 );
   }
 
   componentWillUnmount() {
