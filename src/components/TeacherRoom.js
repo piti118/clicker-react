@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import Toggle from 'material-ui/Toggle';
 import QRCode from 'qrcode.react'
 import PropTypes from 'prop-types'
 import {BarChart,
@@ -105,14 +106,27 @@ class RoomInfo extends Component {
         <RaisedButton
           onClick={this.onQROpen}
           label="QR Code"
+          style={{margin: 15}}
           primary
         />
         <RaisedButton
           onClick={() => this.props.onReset(roomid)}
           label="Reset"
-          style={{marginLeft: 30}}
+          style={{margin: 15}}
           secondary/>
 
+        <div style={{
+          display:'inline-block',
+          verticalAlign: 'middle'
+        }}>
+          <Toggle
+            style={{margin: 15}}
+            label="Shuffle Mode"
+            labelPosition="right"
+            toggled={this.props.shuffleMode}
+            onToggle={(e, v) => this.props.onShuffleModeChange(v)}
+        />
+        </div>
         <QRDialog
           open={this.state.qropen}
           onRequestClose={this.onQRClose}
@@ -125,7 +139,9 @@ class RoomInfo extends Component {
 
 RoomInfo.propTypes = {
   roomid: PropTypes.string.isRequired,
-  onReset: PropTypes.func.isRequired
+  shuffleMode: PropTypes.bool.isRequired,
+  onReset: PropTypes.func.isRequired,
+  onShuffleModeChange: PropTypes.func.isRequired, //(v) =>
 }
 
 
@@ -135,7 +151,8 @@ export default class TeacherRoom extends Component {
     super(props)
     this.state = {
       loading: true,
-      tally: null
+      tally: {'1':0, '2':0, '3':0, '4':0},
+      shuffleMode: false
     }
     this.poller = null
   }
@@ -156,7 +173,7 @@ export default class TeacherRoom extends Component {
   }
 
   componentDidMount() {
-    this.poller = setInterval(() => this.updateTally() , 700 );
+    this.poller = setInterval(() => this.updateTally() , 1000 );
   }
 
   componentWillUnmount() {
@@ -167,20 +184,28 @@ export default class TeacherRoom extends Component {
     api.reset(roomid, token)
   }
 
+  onShuffleModeChange(value) {
+    this.setState({shuffleMode: value})
+  }
 
   render() {
-    const {loading, tally} = this.state
+    const {loading, tally, shuffleMode} = this.state
     const {roomid, token} = this.props
-
+    const showTally = shuffleMode?util.shuffleObject(tally): tally
     return (
       <div className="full-screen vertical-center">
         <div className="card horizontal-center">
           <Loading loading={loading}>
             <div>
               <HomeButton/>
-              <RoomInfo roomid={roomid} onReset={()=>this.onReset(roomid, token)}/>
+              <RoomInfo
+                roomid={roomid}
+                onReset={()=>this.onReset(roomid, token)}
+                shuffleMode={shuffleMode}
+                onShuffleModeChange={this.onShuffleModeChange.bind(this)
+              }/>
               <div style={{paddingTop:20, paddingBotom:20}}>
-                <VoteResult data={tally}/>
+                <VoteResult data={showTally}/>
               </div>
             </div>
           </Loading>

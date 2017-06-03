@@ -12,3 +12,22 @@ export function colorObjectForAnswer(a) {
 export function colorForAnswer(a) {
   return colorObjectForAnswer(a).rgb().string()
 }
+
+
+export function shuffleArray(a) {
+  const secret = a.map(Math.random)
+  const tmp = a.map((e, i)=>({index: i, secret: secret[i]}))
+  tmp.sort((a, b) => (a.secret - b.secret))
+  return tmp.map((x)=>a[x.index])
+}
+
+export function shuffleObject(o) {
+  const keys = Object.keys(o)
+  const values = keys.map(k=>o[k])
+  const shuffledKeys = shuffleArray(keys)
+  const ret = shuffledKeys.reduce((obj, x, i)=>{
+      obj[x] = values[i]
+      return obj
+    }, {})
+  return ret
+}

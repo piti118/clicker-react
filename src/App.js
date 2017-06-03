@@ -9,6 +9,53 @@ import StudentRoom from './components/StudentRoom'
 import Home from './components/Home'
 import NotFound from './components/NotFound'
 import Loading from './components/Loading'
+import {CSSTransitionGroup} from 'react-transition-group'
+
+function AppRoutes({token, onCreateRoom}) {
+  return (
+    <Switch>
+      <Route exact path="/" render={(props) =>
+        <Home
+          key='home'
+          history={props.history}
+          onCreateRoom={() => onCreateRoom(token)}
+        />
+      }/>
+      <Route path="/teacher/:roomid" render={(props)=>
+        <TeacherRoom
+          key='teacher'
+          roomid={props.match.params.roomid}
+          token={token}/>}
+      />
+      <Route path="/student/:roomid" render={(props)=>
+        <StudentRoom
+          key='student'
+          roomid={props.match.params.roomid}
+          token={token}/>}
+      />
+      <Route component={NotFound} />
+    </Switch>)
+}
+
+function FadeRouter({render}) {
+  return (
+    <Router>
+      <Route render={({ location, history }) => {
+        return (
+          <CSSTransitionGroup
+            transitionName="fade"
+            transitionEnterTimeout={300}
+            transitionLeaveTimeout={300}
+          >
+            <Route location={location} key={location.key}>
+              {render({location, history})}
+            </Route>
+          </CSSTransitionGroup>
+        )}}/>
+    </Router>
+  )
+}
+
 
 class App extends Component {
 
@@ -51,7 +98,6 @@ class App extends Component {
 
   onCreateRoom(token, history) {
     api.createRoom(token).then((res) => {
-      console.log(res.data)
       const roomid = res.data.roomId
       history.push(`/teacher/${roomid}`)
     })
@@ -65,23 +111,11 @@ class App extends Component {
         <div>
           <div className="bg-image"/>
           <Loading loading={loading} showLoader={false}>
-            <Router>
-              <Switch>
-                <Route exact path="/" render={(props) =>
-                  <Home
-                    history={props.history}
-                    onCreateRoom={() => this.onCreateRoom(token, props.history)}
-                    />}
-                  />
-                <Route path="/teacher/:roomid" render={(props)=>
-                  <TeacherRoom roomid={props.match.params.roomid} token={token}/>}
-                  />
-                <Route path="/student/:roomid" render={(props)=>
-                  <StudentRoom roomid={props.match.params.roomid} token={token}/>}
-                  />
-                <Route component={NotFound} />
-              </Switch>
-            </Router>
+            <FadeRouter render={({location, history}) => (
+              <AppRoutes token={token}
+                onCreateRoom={() => this.onCreateRoom(token, history)}
+              />)}
+            />
           </Loading>
         </div>
       </MuiThemeProvider>
