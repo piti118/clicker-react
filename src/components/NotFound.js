@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import BadMood from 'material-ui/svg-icons/social/mood-bad'
 import {withRouter, NavLink} from 'react-router-dom'
-import HomeIcon from 'material-ui/svg-icons/action/home';
 
 function NotFound(props) {
   return (

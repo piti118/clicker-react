@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import CircularProgress from 'material-ui/CircularProgress';
 import './App.css';
 import * as api from './api'
 import PropTypes from 'prop-types'
@@ -9,6 +8,7 @@ import TeacherRoom from './components/TeacherRoom'
 import StudentRoom from './components/StudentRoom'
 import Home from './components/Home'
 import NotFound from './components/NotFound'
+import Loading from './components/Loading'
 
 class App extends Component {
 
@@ -64,8 +64,7 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
           <div className="bg-image"/>
-          {!loading || <CircularProgress/>}
-          {loading || (
+          <Loading loading={loading} showLoader={false}>
             <Router>
               <Switch>
                 <Route exact path="/" render={(props) =>
@@ -83,7 +82,7 @@ class App extends Component {
                 <Route component={NotFound} />
               </Switch>
             </Router>
-          )}
+          </Loading>
         </div>
       </MuiThemeProvider>
     );

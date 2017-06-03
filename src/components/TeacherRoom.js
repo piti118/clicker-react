@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import CircularProgress from 'material-ui/CircularProgress';
 import QRCode from 'qrcode.react'
 import PropTypes from 'prop-types'
 import {BarChart,
@@ -13,6 +12,7 @@ import HomeButton from './HomeButton'
 import * as api from '../api'
 import Dialog from 'material-ui/Dialog';
 import * as util from '../util'
+import Loading from './Loading'
 
 function transformData(o) {
   return Object.keys(o).map((k) => ({answer: k, count: o[k]}))
@@ -174,17 +174,15 @@ export default class TeacherRoom extends Component {
     return (
       <div className="full-screen vertical-center">
         <div className="card horizontal-center">
-
-          {loading && <CircularProgress/>}
-          {!loading && (
-          <div>
-            <HomeButton/>
-            <RoomInfo roomid={roomid} onReset={()=>this.onReset(roomid, token)}/>
-            <div style={{paddingTop:20, paddingBotom:20}}>
-              <VoteResult data={tally}/>
+          <Loading loading={loading}>
+            <div>
+              <HomeButton/>
+              <RoomInfo roomid={roomid} onReset={()=>this.onReset(roomid, token)}/>
+              <div style={{paddingTop:20, paddingBotom:20}}>
+                <VoteResult data={tally}/>
+              </div>
             </div>
-          </div>
-        )}
+          </Loading>
         </div>
       </div>
     )
