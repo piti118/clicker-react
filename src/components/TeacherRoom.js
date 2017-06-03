@@ -142,16 +142,18 @@ export default class TeacherRoom extends Component {
 
   updateTally() {
     const roomid = this.props.roomid
-    return api.tally(roomid).then((res) => {
-      console.log(res.data.counts)
-      this.setState({
-        loading: false,
-        tally: res.data.counts
+    if(!document.hidden){ //do nothing when inactive
+      return api.tally(roomid).then((res) => {
+        console.log(res.data.counts)
+        this.setState({
+          loading: false,
+          tally: res.data.counts
+        })
       })
-    })
-    .catch(e => {
-      console.error(e)
-    })
+      .catch(e => {
+        console.error(e)
+      })
+    }
   }
 
   componentDidMount() {

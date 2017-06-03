@@ -59,11 +59,13 @@ export default class StudentRoom extends Component {
     //only check if it's null throw away all other answer
     //to prevent flickering
     this.poller = setInterval(() => {
-      const {roomid, token} = this.props
-      api.myAnswer(roomid, token).then(res => {
-        const {answer} = res.data
-        this.setState({answer: answer})
-      })
+      if(!document.hidden){ //don't poll while inactive
+        const {roomid, token} = this.props
+        api.myAnswer(roomid, token).then(res => {
+          const {answer} = res.data
+          this.setState({answer: answer})
+        })
+      }
     }, 2000)
   }
 
