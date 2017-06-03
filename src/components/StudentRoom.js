@@ -90,8 +90,8 @@ export default class StudentRoom extends Component {
     const {answer} = this.state
     return (
       <div className="full-screen vertical-center">
+        <HomeButton/>
         <div className="horizontal-center card">
-          <HomeButton/>
           <h1>Student Room {roomid}</h1>
           <VoteButtons answer={answer} onVote={(answer) => this.onVote(roomid, token, answer)}/>
         </div>
