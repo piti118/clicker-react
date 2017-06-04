@@ -22,6 +22,7 @@ function Choice(props){
         hoverColor={hoverColor}
         fullWidth={true}
         onClick={props.onClick}
+        labelStyle={{color:'rgba(0, 0, 0, 0.7)'}}
       />
     </div>
   )

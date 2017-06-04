@@ -130,6 +130,7 @@ class RoomInfo extends Component {
             labelPosition="right"
             toggled={this.props.shuffleMode}
             onToggle={(e, v) => this.props.onShuffleModeChange(v)}
+            labelStyle={{color:'rgba(0, 0, 0, 0.7)'}}
         />
         </div>
         <QRDialog
