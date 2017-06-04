@@ -21,7 +21,11 @@
   },
   "devDependencies": {
     "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.0.1",
+    "react-autocomplete-cli": "0.0.3",
     "react-scripts": "1.0.7"
   },
   "scripts": {
@@ -30,6 +34,8 @@
     "build-deploy": "react-scripts build && cp -r build/* ../node-clicker-api/public/",
     "eslint-init": "eslint --init",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "singlePath": "rc-autocomplete --src 'node_modules/react-toolbox/components/**/*.js'",
+    "generate": "rc-autocomplete"
   }
 }

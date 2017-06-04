@@ -1,13 +1,14 @@
 import React from 'react'
-import HomeButton from './HomeButton'
 import PropTypes from 'prop-types'
+import HomeButton from './HomeButton'
 
-function Content({children, withHome}) {
+
+function Content({ children, withHome }) {
   return (
     <div className="full-screen vertical-center">
       <div className="horizontal-center card">
         <div className="card-title">
-          {withHome && <HomeButton/>}
+          {withHome && <HomeButton />}
         </div>
         <div className="card-content">
           {children}
@@ -17,11 +18,11 @@ function Content({children, withHome}) {
 }
 
 Content.propTypes = {
-  withHome: PropTypes.bool
+  withHome: PropTypes.bool,
 }
 
 Content.defaultProps = {
-  withHome: true
+  withHome: true,
 }
 
 export default Content
