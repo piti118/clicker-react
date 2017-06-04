@@ -58,10 +58,9 @@ export default class StudentRoom extends Component {
     this.poller=null
   }
 
-  //there is a race here fix it later
   startPoller() {
-    //only check if it's null throw away all other answer
-    //to prevent flickering
+    //FIX ME: this should only check if it's null throw away all other answer
+    //to prevent flickering. But should be able to initialze from empty answer?.
     this.poller = setInterval(() => {
       if(!document.hidden){ //don't poll while inactive
         const {roomid, token} = this.props

@@ -23,21 +23,27 @@ class JoinRoom extends Component {
   render() {
     const {roomid} = this.state
     const {history} = this.props
+    //TODO: use theme
+    const paleBlue="rgb(135, 175, 193)"
     return (
       <div>
         <TextField
           style={{width:100, marginLeft:20, marginRight:20}}
           value={roomid}
-          hintText="ABCXYZ"
+          hintText="A2CX4Z"
           floatingLabelText="Room ID"
           onChange={(e, v) => this.onRoomChange(v)}
           maxLength="6"
+          underlineStyle={{borderColor: paleBlue}}
+          inputStyle={{color:'rgba(0, 0, 0, 0.7)'}}
         />
         <RaisedButton
           style={{marginLeft:20, marginRight:20}}
           label="Join Room"
           disabled={!this.validRoom(roomid)}
           onClick={() => history.push(`/student/${roomid}`)}
+          disabledBackgroundColor={paleBlue}
+
           primary
         />
       </div>
@@ -54,6 +60,7 @@ function CreateRoom(props)  {
 }
 
 function Home(props) {
+  //TODO: refactor outer shell
   return (
     <div className="full-screen vertical-center">
       <div className="horizontal-center card home">
