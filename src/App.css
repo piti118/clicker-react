@@ -32,10 +32,28 @@ body {
   margin: 0
 }
 
-.card {
+.hover-highlight {
   display: inline-block;
+}
+.hover-highlight:hover {
+  background-color: rgba(196, 196, 196, 0.64);
+}
+
+.card {
+  display: block;
   background-color: rgba(247, 247, 247, 0.97);
-  padding: 30px;
+  padding: 0px 0px 48px 0px;
+  /*padding: 0px 30px 30px 30px;*/
+}
+
+.card-title {
+  text-align: left;
+  height: 48px;
+}
+
+.card-content {
+  padding-left: 30px;
+  padding-right:30px;
 }
 
 .graph-container {

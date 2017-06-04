@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-
+import Content from './Content'
 class JoinRoom extends Component {
   constructor(props) {
     super(props)
@@ -62,8 +62,8 @@ function CreateRoom(props)  {
 function Home(props) {
   //TODO: refactor outer shell
   return (
-    <div className="full-screen vertical-center">
-      <div className="horizontal-center card home">
+    <Content withHome={false}>
+      <div className="home">
         <h1>Clickery</h1>
         <div className="rounded-highlight">
           <div className="zoom horizontal-center">
@@ -75,8 +75,24 @@ function Home(props) {
           </div>
         </div>
       </div>
-    </div>
+    </Content>
   )
+  // return (
+  //   <div className="full-screen vertical-center">
+  //     <div className="horizontal-center card home">
+  //       <h1>Clickery</h1>
+  //       <div className="rounded-highlight">
+  //         <div className="zoom horizontal-center">
+  //           <JoinRoom history={props.history}/>
+  //         </div>
+  //         <h2>or</h2>
+  //         <div className="zoom">
+  //           <CreateRoom onCreateRoom={props.onCreateRoom}/>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // )
 }
 
 Home.propTypes = {

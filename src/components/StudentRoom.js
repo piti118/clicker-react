@@ -3,8 +3,7 @@ import * as api from '../api'
 import PropTypes from 'prop-types'
 import FlatButton from 'material-ui/FlatButton';
 import * as util from '../util'
-import HomeButton from './HomeButton'
-
+import Content from './Content'
 function Choice(props){
   const {label, selected} = props
   const style={
@@ -59,6 +58,7 @@ export default class StudentRoom extends Component {
     this.poller=null
   }
 
+  //TODO: make this long polling
   startPoller() {
     //FIX ME: this should only check if it's null throw away all other answer
     //to prevent flickering. But should be able to initialze from empty answer?.
@@ -89,13 +89,10 @@ export default class StudentRoom extends Component {
     const {roomid, token} = this.props
     const {answer} = this.state
     return (
-      <div className="full-screen vertical-center">
-        <HomeButton/>
-        <div className="horizontal-center card">
-          <h1>Student Room {roomid}</h1>
-          <VoteButtons answer={answer} onVote={(answer) => this.onVote(roomid, token, answer)}/>
-        </div>
-      </div>
+      <Content>
+        <h1>Student Room {roomid}</h1>
+        <VoteButtons answer={answer} onVote={(answer) => this.onVote(roomid, token, answer)}/>
+      </Content>
     )
   }
 }

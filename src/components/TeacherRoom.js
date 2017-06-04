@@ -9,13 +9,13 @@ import {BarChart,
   CartesianGrid,
   ResponsiveContainer,
   Cell} from 'recharts'
-import HomeButton from './HomeButton'
 import * as api from '../api'
 import Dialog from 'material-ui/Dialog';
 import * as util from '../util'
 import Loading from './Loading'
 import MemoryIcon from 'material-ui/svg-icons/hardware/memory';
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh'
+import Content from './Content'
 
 function transformData(o) {
   return Object.keys(o).map((k) => ({answer: k, count: o[k]}))
@@ -62,7 +62,7 @@ function QRDialog({open, onRequestClose, value}) {
       open={open}
       onRequestClose={onRequestClose}
     >
-      <div className="horizontal-center" style={{fontSize:'20'}}>
+      <div className="horizontal-center" style={{fontSize:'20px'}}>
         Join : <a href={value}>{value}</a>
       </div>
       <div className="horizontal-center qr-canvas">
@@ -178,6 +178,7 @@ export default class TeacherRoom extends Component {
     }
   }
 
+  //TODO: make this long polling
   componentDidMount() {
     this.poller = setInterval(() => this.updateTally() , 1000 );
   }
@@ -199,24 +200,21 @@ export default class TeacherRoom extends Component {
     const {roomid, token} = this.props
     const showTally = shuffleMode?util.shuffleObject(tally): tally
     return (
-      <div className="full-screen vertical-center">
-        {!loading && <HomeButton/>}
-        <div className="card horizontal-center">
-          <Loading loading={loading}>
-            <div>
-              <RoomInfo
-                roomid={roomid}
-                onReset={()=>this.onReset(roomid, token)}
-                shuffleMode={shuffleMode}
-                onShuffleModeChange={this.onShuffleModeChange.bind(this)
-              }/>
-              <div style={{paddingTop:20, paddingBotom:20}}>
-                <VoteResult data={showTally}/>
-              </div>
+      <Content withHome={!loading}>
+        <Loading loading={loading}>
+          <div>
+            <RoomInfo
+              roomid={roomid}
+              onReset={()=>this.onReset(roomid, token)}
+              shuffleMode={shuffleMode}
+              onShuffleModeChange={this.onShuffleModeChange.bind(this)
+            }/>
+            <div style={{paddingTop:20, paddingBotom:20}}>
+              <VoteResult data={showTally}/>
             </div>
-          </Loading>
-        </div>
-      </div>
+          </div>
+        </Loading>
+      </Content>
     )
   }
 }
