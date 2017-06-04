@@ -14,6 +14,8 @@ import * as api from '../api'
 import Dialog from 'material-ui/Dialog';
 import * as util from '../util'
 import Loading from './Loading'
+import MemoryIcon from 'material-ui/svg-icons/hardware/memory';
+import RefreshIcon from 'material-ui/svg-icons/navigation/refresh'
 
 function transformData(o) {
   return Object.keys(o).map((k) => ({answer: k, count: o[k]}))
@@ -108,12 +110,15 @@ class RoomInfo extends Component {
           label="QR Code"
           style={{margin: 15}}
           primary
+          icon={<MemoryIcon/>}
         />
         <RaisedButton
           onClick={() => this.props.onReset(roomid)}
           label="Reset"
           style={{margin: 15}}
-          secondary/>
+          secondary
+          icon={<RefreshIcon/>}
+        />
 
         <div style={{
           display:'inline-block',
