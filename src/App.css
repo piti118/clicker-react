@@ -5,6 +5,7 @@ html, body {
 
 body {
   color: rgba(0, 0, 0, 0.7);
+  background-color: rgb(50, 50, 50);
 }
 
 .rounded-highlight {
@@ -14,6 +15,8 @@ body {
 }
 
 .bg-image{
+  /* for during loading time */
+
   background: url(https://source.unsplash.com/collection/606460/daily) no-repeat center center fixed;
   background-size: cover;
   position: fixed;
