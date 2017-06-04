@@ -34,7 +34,7 @@ function VoteResult(props) {
           <Bar
             dataKey="count"
             fill="#8884d8"
-            label={{ fill: 'rgba(0, 0, 0, 0.6)', fontSize: 20 }}
+            label={{ fill: 'rgba(0, 0, 0, 0.6)', fontSize: '20px' }}
             animationDuration={200}>
             {
               data.map((k)=> (
