@@ -41,7 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-deploy": "react-scripts build && cp -r build/* ../node-clicker-api/public/",
+    "build-deploy": "react-scripts build && cp -r build/* ../clickery-socket/public/",
     "eslint-init": "eslint --init",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
