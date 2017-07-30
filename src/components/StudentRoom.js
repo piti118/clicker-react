@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import FlatButton from 'material-ui/FlatButton';
-import * as api from '../api'
+
+import StudentSocket from '../lib/StudentSocket'
 import * as util from '../util'
 import Content from './Content'
+
 
 function Choice(props) {
   const { label, selected } = props
@@ -54,8 +56,12 @@ function VoteButtons(props) {
 }
 
 VoteButtons.propTypes = {
-  answer: PropTypes.number.isRequired,
+  answer: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onVote: PropTypes.func.isRequired,
+}
+
+VoteButtons.defaultProps = {
+  answer: null
 }
 
 export default class StudentRoom extends Component {
@@ -64,34 +70,29 @@ export default class StudentRoom extends Component {
     this.state = {
       answer: null,
     }
-    this.poller = null
+    this.socket = null
   }
 
-  // TODO: make this long polling
-  startPoller() {
-    // FIX ME: this should only check if it's null throw away all other answer
-    // to prevent flickering. But should be able to initialze from empty answer?.
-    this.poller = setInterval(() => {
-      if (!document.hidden) { // don't poll while inactive
-        const { roomid, token } = this.props
-        api.myAnswer(roomid, token).then((res) => {
-          const { answer } = res.data
-          this.setState({ answer })
-        })
-      }
-    }, 2000)
+  initializeSocket() {
+    const { token, roomid } = this.props
+    this.socket = new StudentSocket(roomid, token)
+    this.socket.onVoteClear(() => {
+      console.log('vote-clear')
+      this.setState({ answer: null })
+    })
   }
 
   componentDidMount() {
-    this.startPoller()
+    this.initializeSocket()
   }
 
   componentWillUnmount() {
-    clearInterval(this.poller)
+    this.socket.disconnect()
+    this.socket = null
   }
 
   onVote(roomid, token, answer) {
-    this.setState({ answer }, () => api.vote(roomid, token, answer))
+    this.setState({ answer }, () => this.socket.vote(roomid, token, answer))
   }
 
   render() {

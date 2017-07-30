@@ -3,15 +3,19 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
 import QRCode from 'qrcode.react'
 import PropTypes from 'prop-types'
-import { BarChart,
+import {
+  BarChart,
   Bar,
   XAxis,
   CartesianGrid,
   ResponsiveContainer,
-  Cell } from 'recharts'
+  Cell
+} from 'recharts'
+
 import Dialog from 'material-ui/Dialog';
 import MemoryIcon from 'material-ui/svg-icons/hardware/memory';
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh'
+import TeacherSocket from '../lib/TeacherSocket'
 import * as api from '../api'
 import * as util from '../util'
 import Loading from './Loading'
@@ -109,7 +113,7 @@ class RoomInfo extends Component {
         </h1>
         <RaisedButton
           onClick={this.onQROpen}
-          label="QR Code"
+          label="Join"
           style={{ margin: 15 }}
           primary
           icon={<MemoryIcon />}
@@ -153,7 +157,7 @@ RoomInfo.propTypes = {
   onShuffleModeChange: PropTypes.func.isRequired, //(v) =>
 }
 
-
+//TODO: Seperate this into container and presentational
 export default class TeacherRoom extends Component {
 
   constructor(props) {
@@ -164,35 +168,24 @@ export default class TeacherRoom extends Component {
       shuffleMode: false,
     }
     this.poller = null
+    this.socket = null
   }
 
-  updateTally() {
-    const roomid = this.props.roomid
-    if (!document.hidden) { // do nothing when inactive
-      return api.tally(roomid).then((res) => {
-        this.setState({
-          loading: false,
-          tally: res.data.counts,
-        })
-      })
-      .catch((e) => {
-        console.error(e)
-      })
-    }
-    return null
-  }
-
-  // TODO: make this long polling
   componentDidMount() {
-    this.poller = setInterval(() => this.updateTally(), 1000);
+    const { roomid, token } = this.props
+    this.socket = new TeacherSocket(roomid, token)
+    this.socket.onTally((data) => {
+      this.setState({ tally: data, loading: false })
+    })
+    this.socket.tally()
   }
 
   componentWillUnmount() {
-    clearInterval(this.poller)
+    this.socket.disconnect()
   }
 
   onReset(roomid, token) {
-    api.reset(roomid, token)
+    this.socket.clearVote(roomid, token)
   }
 
   onShuffleModeChange(value) {
